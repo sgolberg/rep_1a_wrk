@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<callxml version="3.0">
+<assign var="setAppFileName" value="NTI_catcher_2012_fax"/>
+<assign var="currentCalledID" value="$session.callerID;"/>
+<assign var="CallLogPrefix" value="~~~~~~$setAppFileName;_$currentCalledID; "/> 
+<assign var="prompt_2_play_reccall" value="FAX.wav"/>
+<assign var="prompPlayBack" value="audio/$prompt_2_play_reccall;"/>
+<assign var="wait_final" value="1s"/>
+
+<recordcall value="1" info="$setAppFileName;_$prompt_2_play_reccall;_$currentCalledID;"/>       
+ <block label="B1" next="#HangUpIt">
+    <wait value="100ms"/>
+
+    <log value="$CallLogPrefix; Playing $prompPlayBack;"/>
+	  <playaudio cache='yes' format='audio/wav' value="$prompPlayBack;" termdigits='*'/>
+    <wait value="1s"/>
+   <log value="$CallLogPrefix; will wait for $wait_final;"/>
+    <wait value="$wait_final;"/>
+  </block> 
+ 
+  <block label="HangUpIt">
+	<log>$CallLogPrefix;Will hang up now. </log>
+  <hangup/>
+  </block>
+  <onhangup>  
+		<log>$CallLogPrefix;Hangup. Call duration: $session.LastCallDuration; </log>
+	  <exit/>
+  </onhangup> 
+  <onerror> 
+	<log>$CallLogPrefix;CallFailure Info: $session.lasterror;</log>				
+	  <exit/>  
+  </onerror>
+</callxml>
