@@ -6,6 +6,7 @@
 <assign var="prompt_2_play_reccall" value="FAX.wav"/>
 <assign var="prompPlayBack" value="audio/$prompt_2_play_reccall;"/>
 <assign var="wait_final" value="1s"/>
+<assign var="gitVersion" value="2.0"/>
 
 <recordcall value="1" info="$setAppFileName;_$prompt_2_play_reccall;_$currentCalledID;"/>       
  <block label="B1" next="#HangUpIt">
